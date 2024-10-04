@@ -31,7 +31,7 @@ impl App {
             for (index, name) in names.iter().enumerate() {
                 println!("{}: {name}", index + 1);
             }
-            println!("请输入选择以选择模板：");
+            println!("请输入数字以选择模板：");
             let mut input = String::new();
             io::stdin().read_line(&mut input).expect(&"读取输入失败".red());
             let input = input.trim();
