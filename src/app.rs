@@ -120,6 +120,7 @@ impl App {
         let mut state = State::Nothing;
         let mut max = None;
         let mut current = 0;
+        let mut indexes = Vec::new();
         for c in content.chars() {
             match state {
                 State::Nothing => {
@@ -147,13 +148,11 @@ impl App {
                                 Some(current)
                             }
                             Some(max) => {
-                                if current > max && current != max + 1 {
-                                    panic!("{}", "索引必须连续，请检查模板文件".red());
-                                }
                                 Some(max.max(current))
                             }
                         };
 
+                        indexes.push(current);
                         current = 0;
                         continue;
                     }
@@ -168,6 +167,15 @@ impl App {
                 }
             }
         }
+
+        indexes.sort_unstable();
+        indexes.dedup();
+        for i in 0..indexes.len() - 1 {
+            if indexes[i+1] != indexes[i] + 1 {
+                panic!("{}", "索引必须连续，请检查模板文件".red());
+            }
+        }
+
 
         if max.is_none() {
             None
