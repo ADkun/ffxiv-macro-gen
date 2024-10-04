@@ -1,7 +1,7 @@
 use std::panic;
 
-use ffxiv_momacro_gen::app::App;
-use ffxiv_momacro_gen::util;
+use ffxiv_macro_gen::app::App;
+use ffxiv_macro_gen::util;
 
 fn main() {
     let app = App::new();

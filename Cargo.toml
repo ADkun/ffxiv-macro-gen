@@ -1,5 +1,5 @@
 [package]
-name = "ffxiv-momacro-gen"
+name = "ffxiv-macro-gen"
 version = "0.1.0"
 edition = "2021"
 
