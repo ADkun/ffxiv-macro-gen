@@ -22,6 +22,7 @@ impl App {
         self.check_folder();
 
         println!("欢迎使用FF14宏生成器");
+        println!("请查看README.md文件以获取模板宏的参数说明");
         println!("提示：按Ctrl+C退出程序");
         println!();
 
@@ -29,7 +30,7 @@ impl App {
         loop {
             println!("可使用的宏模板：");
             for (index, name) in names.iter().enumerate() {
-                println!("{}: {name}", index + 1);
+                println!("{}", format!("{}: {name}", index + 1).yellow());
             }
             println!("请输入数字以选择模板：");
             let mut input = String::new();
@@ -61,21 +62,21 @@ impl App {
             let path = Path::new(&self.macro_dir).join(name);
             let mut content = util::read_file_content(&path).unwrap();
             let max = self.find_max_in_content(&content);
-            if max.is_none() {
-                panic!("找不到索引，请检查 {} 文件内容是否正确", path.display());
-            }
-            let max = max.unwrap();
-            println!("模板宏内容：");
-            println!("{}", content.blue());
-            let params = match self.input_params(max) {
-                Some(params) => params,
-                None => continue,
-            };
+            if let Some(max) = max {
+                println!("模板宏内容：");
+                println!("{}", content.blue());
+                let params = match self.input_params(max) {
+                    Some(params) => params,
+                    None => continue,
+                };
 
-            for i in 1..=max {
-                let from = format!("[{i}]");
-                let to = &params[i-1];
-                content = content.replace(&from, to);
+                for i in 1..=max {
+                    let from = format!("[{i}]");
+                    let to = &params[i-1];
+                    content = content.replace(&from, to);
+                }
+            } else {
+                println!("{}", "找不到索引，将直接复制文件内容".yellow());
             }
 
             println!("宏内容：");
@@ -170,9 +171,11 @@ impl App {
 
         indexes.sort_unstable();
         indexes.dedup();
-        for i in 0..indexes.len() - 1 {
-            if indexes[i+1] != indexes[i] + 1 {
-                panic!("{}", "索引必须连续，请检查模板文件".red());
+        if indexes.len() >= 2 {
+            for i in 0..indexes.len() - 1 {
+                if indexes[i+1] != indexes[i] + 1 {
+                    panic!("{}", "索引必须连续，请检查模板文件".red());
+                }
             }
         }
 
