@@ -18,10 +18,7 @@ impl App {
                 continue;
             }
 
-            let mac = format!("/micon {trimmed}
-/merror off
-/ac {trimmed} <mo>
-/ac {trimmed}");
+            let mac = format!("/micon {trimmed}\r\n/merror off\r\n/ac {trimmed} <mo>\r\n/ac {trimmed}");
             println!("生成的指向宏：");
             println!("{}", mac.blue());
 
