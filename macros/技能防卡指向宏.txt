@@ -1,0 +1,8 @@
+/micon [1]
+/mlock
+/ac [1] <mo>
+/ac [1]
+/hotbar copy [2] [4] [2] [5]
+/hotbar set [1] [4] [3]
+/wait 1
+/hotbar copy [2] [5] [2] [4]
