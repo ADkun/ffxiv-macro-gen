@@ -3,6 +3,5 @@
 /ac [1]
 /hotbar copy [2] [4] [2] [5]
 /hotbar set [1] [4] [3]
-/p 无敌《[1]》 <se.1>
 /wait 1
 /hotbar copy [2] [5] [2] [4]
